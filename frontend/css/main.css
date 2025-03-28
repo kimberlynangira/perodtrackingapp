@@ -1,0 +1,636 @@
+/*Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Lexend;
+    background-color: #ed1e7f16;
+    color: #333;
+}
+
+/*-----------------------------------
+Login Page
+-----------------------------------*/
+.login {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    padding: 30px;
+    background-color: #fdfdfd;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.login-left {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    height: 670px;
+    overflow: hidden;
+    border-radius: 16px;
+    flex: 1;
+}
+
+.login-left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+}
+
+.login-text {
+    position: absolute;
+    top: 15%;
+    left: 40%;
+    transform: translate(-60%, -30%);
+    color: #000000;
+    text-align: left;
+    z-index: 2;
+    padding: 40px;
+    max-width: 100%;
+}
+
+.login-text h2 {
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ed1e7f;
+}
+
+.login-text p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.login-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 30px;
+    border-radius: 12px;
+
+}
+
+.login-card-top {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-card-top img {
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.login-card-top h2 {
+    margin: 0;
+    color: #222;
+    font-size: 26px;
+}
+
+.login-card-top p {
+    color: #888;
+    font-size: 14px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #444;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper span {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.login-btn {
+    width: 100%;
+    background-color: #ed1e7f;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #d0176f;
+}
+
+.link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.link a {
+    color: #ed1e7f;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+
+header {
+    position: fixed;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 10px;
+    background-color: #ffffff;
+    z-index: 999;
+}
+
+.logo img {
+    width: 100px;
+    margin-left: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.header-left .profile-section {
+    margin-left: 40px ;
+    font-size: 40px;
+}
+
+.header-left .profile-section ion-icon {
+    color: #664556;
+    background-color: #ed1e7f19;
+    border-radius: 50%;
+}
+
+.notification-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.notification-container ion-icon {
+    font-size: 20px;
+    color: #664556;
+}
+
+.notification-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    min-width: 13px;
+    text-align: center;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: #ffffff;
+    color: white;
+    height: calc(100% - 140px); /*Adjusted height*/
+    position: fixed;
+    left: 20px;
+    top: 100px; /*change bottom to top*/
+    padding-top: 20px;
+    border-radius: 20px;
+    border: 1px solid #ed1e7f;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 0 15px #ed1e7f72;
+    transition: width 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mobile-nav {
+    display: none;
+}
+
+.sidebar:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 0 25px #ed1e7fb1;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-list li {
+    margin-left: 20px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-list li a {
+    margin-bottom: 5px;
+    font-weight: 500;
+    width: 230px;
+    padding: 10px;
+    color: #664556;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+    border-radius: 8px;
+}
+
+.nav-list li a ion-icon {
+    font-size: 22px;
+    margin-right: 12px;
+}
+
+.nav-list li a:hover,
+.nav-list li a.active {
+    color: #ed1e7f;
+    background-color: #ed1e7f46;
+}
+
+.nav-list ul.nav-bottom {
+    border-top: 1px solid transparent;
+    border-image-slice: 1;
+    position: absolute;
+    padding-bottom: 10px;
+    bottom: 20px;
+    width: 100%;
+}
+
+.nav-list ul.nav-bottom li a {
+    color: #ed1e7f;
+}
+
+.nav-list ul.nav-bottom li a:hover {
+    background-color: transparent;
+    color: #664556;
+}
+
+.nav-bottom-text {
+    margin-top: 10px;
+    margin-left: 27px;
+}
+
+.nav-bottom-text a {
+    color: #664556;
+    text-decoration: none;
+    font-size: 11px;
+    transition: 0.5s;
+}
+
+.nav-bottom-text a:hover {
+    color: #ed1e7f;
+}
+
+
+
+
+/*--------------------------------------
+Main Content
+--------------------------------------*/
+.main-content {
+    position: relative;
+    margin-left: 290px;
+    width: calc(100% - 290px);
+    padding: 100px 20px 20px;
+    height: calc(100vh - 100px);
+    box-sizing: border-box;
+}
+
+
+.titles p {
+    color: #5d5d5d
+}
+
+/*--------------------------------------
+Overview Page
+--------------------------------------*/
+.overview {
+    display: flex;
+    max-width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #ff6b81, #9b59b6);
+    padding: 20px 50px;
+    border-radius: 25px;
+}
+
+.overview-right span {
+    font-size: 60px;
+    color: #f4f4f4;
+}
+
+.overview-left {
+    text-align: left;
+}
+
+.overview-left h2 {
+    color: #f4f4f4;
+}
+
+.overview-left h3 {
+    font-weight: 400;
+    font-size: 13px;
+    color: #fce1e1;
+    margin-top: 5px;
+}
+
+.overview-cta {
+    margin-top: 10px;
+}
+
+.overview-cta button {
+    font-family: 'Lexend';
+    color: #ed1e7f;
+    font-size: 15px;
+    padding: 7px 14px;
+    border: none;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.overview-cta button:hover {
+    color: #ff0077;
+    background-color: #dbdbdb;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 10px;
+}
+
+.feature-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 250px;
+}
+
+.feature-card span {
+    font-size: 30px;
+    color: #ff6b81;
+}
+
+.feature-card p {
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+
+.device-card {
+    background: linear-gradient(135deg, #ff6b81, #9b59b6);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 350px;
+    margin: auto;
+    height: 350px;
+}
+
+.device-icon span {
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.device-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.device-card p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.connect-btn {
+    font-family: 'Lexend';
+    background: white;
+    color: #ed1e7f;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.connect-btn:hover {
+    background: #ed1e7f;
+    color: white;
+}
+
+.contact-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    max-width: 350px;
+    height: 350px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contact-icon {
+    margin-top: 50px;
+    color: #ed1e7f;
+    margin-bottom: 2rem;
+}
+
+.contact-icon span {
+    font-size: 70px;
+}
+
+.contact-card h3 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.contact-card p {
+    margin: 0.5rem 0 1rem;
+    font-size: 0.75rem;
+}
+
+.contact-btn {
+    font-family: 'Lexend';
+    background: #ed1e7f;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.contact-btn:hover {
+    background: #c41467;
+}
+
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+
+/*-----------------------------------
+Calender
+-----------------------------------*/
+.card-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.card-container .titles {
+    padding: 5px;
+}
+
+.card-container .titles h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.card-container .titles p {
+    font-size: 12px;
+}
+
+.calendar {
+    height: 350px;
+    max-width: 300px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    overflow: hidden;
+    font-family: Lexend;
+    background-color: #ffffff;
+}
+
+.calendar-header {
+    background-color: #ed1e7f;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-header .arrow {
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.calendar-days-of-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 2px;
+    padding: 8px;
+    text-align: center;
+}
+
+.calendar-days div {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.calendar-days div:hover {
+    color: #664556;
+    background-color: #ed1e7f3c;
+}
+
+.calendar-days .today {
+    background-color: #ed1e7f;
+    color: white;
+    border-radius: 50%;
+}
+
+.calendar-days .not-current-month {
+    color: #9d9d9d;
+}
+
+.card.tips {
+    background-color: #66ff99;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card.tips:hover {
+    background-color: #33cc66;
+}
+
+.card.tips ion-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.card.tips h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card.tips p {
+    font-size: 14px;
+}
+
+
