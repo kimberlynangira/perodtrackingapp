@@ -139,24 +139,24 @@ def cycles():
         if not start_date:
             return jsonify({"success": False, "message": "Start date is required"}), 400
 
-    try:
-        datetime.strptime(start_date, '%Y-%m-%d')  # Validate date format
-        if end_date:
-            datetime.strptime(end_date, '%Y-%m-%d')
-    except ValueError:
-        return jsonify({"success": False, "message": "Invalid date format (YYYY-MM-DD)"}), 400
+        try:
+            datetime.strptime(start_date, '%Y-%m-%d')  # Validate date format
+            if end_date:
+                datetime.strptime(end_date, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({"success": False, "message": "Invalid date format (YYYY-MM-DD)"}), 400
 
-    cursor.execute(
-        "INSERT INTO cycles (user_id, start_date, end_date) VALUES (?, ?, ?)",
-        (user_id, start_date, end_date)
-    )
-    db.commit()
-    return jsonify({"success": True, "message": "Cycle added successfully"})
+        cursor.execute(
+            "INSERT INTO cycles (user_id, start_date, end_date) VALUES (?, ?, ?)",
+            (user_id, start_date, end_date)
+        )
+        db.commit()
+        return jsonify({"success": True, "message": "Cycle added successfully"})
 
-   elif request.method == 'GET':
-    cursor.execute("SELECT * FROM cycles WHERE user_id = ?", (user_id,))
-    cycles = cursor.fetchall()
-    return jsonify({"success": True, "cycles": [dict(row) for row in cycles]})
+    elif request.method == 'GET':
+        cursor.execute("SELECT * FROM cycles WHERE user_id = ?", (user_id,))
+        cycles = cursor.fetchall()
+        return jsonify({"success": True, "cycles": [dict(row) for row in cycles]})
 
 @app.route('/symptoms', methods=['POST', 'GET'])
 @login_required
@@ -175,15 +175,15 @@ def symptoms():
         if not cycle_id or not symptom_name or severity is None:
             return jsonify({"success": False, "message": "Cycle ID, symptom name, and severity are required"}), 400
 
-    cursor.execute(
-        "INSERT INTO symptoms (cycle_id, symptom_name, severity)VALUES(?,?,?)",
-        (cycle_id, symptom_name, severity)
-    )
-    db.commit()
-    return jsonify({"success": True, "message": "Symptom added successfully"})
+        cursor.execute(
+            "INSERT INTO symptoms (cycle_id, symptom_name, severity)VALUES(?,?,?)",
+            (cycle_id, symptom_name, severity)
+        )
+        db.commit()
+        return jsonify({"success": True, "message": "Symptom added successfully"})
 
     elif request.method == 'GET':
-      cursor.execute("SELECT * FROM symptoms WHERE cycle_id IN (SELECT id FROM cycles WHERE user_id = ?)", (user_id,))
+        cursor.execute("SELECT * FROM symptoms WHERE cycle_id IN (SELECT id FROM cycles WHERE user_id = ?)", (user_id,))
         symptoms = cursor.fetchall()
         return jsonify({"success": True, "symptoms": [dict(row) for row in symptoms]})
 
