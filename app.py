@@ -188,21 +188,33 @@ pages_path = "C:\\Users\\USER\\perodtrackingapp\\frontend\\pages"  # Replace wit
 
 @app.route('/')
 def serve_index():
-    return send_from_directory('pages', 'login.html')
+    return send_from_directory('frontend/pages', 'login.html')
+
+@app.route('/register')
+def serve_register():
+    return send_from_directory('frontend/pages', 'register.html')
 
 @app.route('/home')
 @login_required
 def serve_home():
-    return send_from_directory('pages', 'home.html')
+    return send_from_directory('frontend/pages', 'home.html')
 
 @app.route('/assets/<path:filename>')
 def serve_assets(filename):
-    return send_from_directory('assets', filename)
+    return send_from_directory('frontend/assets', filename)
 
 @app.route('/css/<path:filename>')
 def serve_css(filename):
-    return send_from_directory('css', filename)
+    return send_from_directory('frontend/css', filename)
 
 @app.route('/js/<path:filename>')
 def serve_js(filename):
-    return send_from_directory('js', filename)
+    return send_from_directory('frontend/js', filename)
+
+# Initialize the database if it doesn't exist
+if __name__ == '__main__':
+    if not os.path.isfile(DATABASE):
+        with app.app_context():
+            init_db()
+
+    app.run(debug=True, port=3000)
