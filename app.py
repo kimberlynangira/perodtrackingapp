@@ -9,13 +9,15 @@ from flask_session import Session  # Import Flask-Session
 
 DATABASE = 'users.db'
 
-app = Flask(__name__, static_folder='frontend')  # Set static folder to 'frontend'
+app = Flask(__name__, static_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'frontend'))  # Set static folder to 'frontend'
 CORS(app)
 
 # Configure session management
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"  # You can choose other types
 Session(app)
+
+# ... (the rest of your code)
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -187,23 +189,26 @@ def symptoms():
         symptoms = cursor.fetchall()
         return jsonify({"success": True, "symptoms": [dict(row) for row in symptoms]})
 
+import os
+pages_path = "C:\\Users\\USER\\perodtrackingapp\\frontend\\pages"  # Replace with YOUR absolute path
+
 @app.route('/')
 def serve_index():
-    return send_from_directory('pages', 'login.html')
+    return send_from_directory(pages_path, 'login.html')
 
 @app.route('/home')
 @login_required
 def serve_home():
-    return send_from_directory('pages', 'home.html')
+    return send_from_directory(pages_path, 'home.html')
 
 @app.route('/assets/<path:filename>')
 def serve_assets(filename):
-    return send_from_directory('assets', filename)
+    return send_from_directory(os.path.join(app.static_folder, 'assets'), filename)
 
 @app.route('/css/<path:filename>')
 def serve_css(filename):
-    return send_from_directory('css', filename)
+    return send_from_directory(os.path.join(app.static_folder, 'css'), filename)
 
 @app.route('/js/<path:filename>')
 def serve_js(filename):
-    return send_from_directory('js', filename)
+    return send_from_directory(os.path.join(app.static_folder, 'js'), filename)
