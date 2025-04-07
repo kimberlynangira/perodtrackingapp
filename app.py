@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify, send_from_directory, g, session, redirect
 from flask_cors import CORS
 import os
@@ -43,13 +44,6 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-# Initialize the database if it doesn't exist
-if __name__ == '__main__':
-    if not os.path.isfile(DATABASE):
-        with app.app_context():
-            init_db()
-
-    app.run(debug=True, port=3000)
 
 def is_valid_email(email):
     """Validates email format."""
@@ -194,21 +188,21 @@ pages_path = "C:\\Users\\USER\\perodtrackingapp\\frontend\\pages"  # Replace wit
 
 @app.route('/')
 def serve_index():
-    return send_from_directory(pages_path, 'login.html')
+    return send_from_directory('pages', 'login.html')
 
 @app.route('/home')
 @login_required
 def serve_home():
-    return send_from_directory(pages_path, 'home.html')
+    return send_from_directory('pages', 'home.html')
 
 @app.route('/assets/<path:filename>')
 def serve_assets(filename):
-    return send_from_directory(os.path.join(app.static_folder, 'assets'), filename)
+    return send_from_directory('assets', filename)
 
 @app.route('/css/<path:filename>')
 def serve_css(filename):
-    return send_from_directory(os.path.join(app.static_folder, 'css'), filename)
+    return send_from_directory('css', filename)
 
 @app.route('/js/<path:filename>')
 def serve_js(filename):
-    return send_from_directory(os.path.join(app.static_folder, 'js'), filename)
+    return send_from_directory('js', filename)
