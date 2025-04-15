@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumaLog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@5.5.4/dist/css/ionicons.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        /* Ensure the logo is properly sized */
+        .logo img {
+            height: 50px; /* Adjust as needed */
+        }
+        /* Style for the overview button */
+        .overview-cta button {
+            background-color: #e6addb; /* Green */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .overview-cta button:hover {
+            background-color: #efb1eb; /* Darker green */
+        }
+
+        /* Style for the connect device button */
+        .connect-btn {
+            background-color: #ef8be1; /* Blue */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .connect-btn:hover {
+            background-color: #eb98de; /* Darker blue */
+        }
+
+        /* Style for contact button */
+        .contact-btn {
+            background-color: #dd99bd; /* Orange */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .contact-btn:hover {
+            background-color: #eeb7e3; /* Darker orange */
+        }
+
+        /* Calendar styles (adjust as needed) */
+        .calendar {
+            width: 300px;
+            max-width: 300px; /* Adjust size as needed */
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .calendar-header span {
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .calendar-days-of-week {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            font-size: 0.9em;
+        }
+
+        .calendar-days div {
+            padding: 8px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .calendar-days div:hover {
+            background-color: #cd71ab;
+        }
+
+        .calendar-days div.active {
+            background-color: #dd1f87;
+            color: white;
+        }
+
+        .calendar-days div.selected {
+            background-color: #da35a9;
+            color: white;
+        }
+        .calendar-days div.period-day {
+            background-color: #ff6666; /* Highlight period days */
+            color: white;
+        }
+
+        .nav-bottom-text {
+            font-size: 0.8em;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-right">
+            <div class="logo">
+                <img src="/frontend/assets/img/logo.png" alt="Luma Log System">
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="notification-container">
+                <ion-icon name="notifications-outline"></ion-icon>
+                <span class="notification-counter">3</span>
+            </div>
+            <div class="profile-section">
+                <ion-icon name="person-circle-outline"></ion-icon>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <ul class="nav-list">
+            <li><a class="active" href="home"><ion-icon name="home"></ion-icon> Overview</a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon> My Profile</a></li>
+            <li><a href="period-tracker"><ion-icon name="calendar-outline"></ion-icon> Period Tracker</a></li>
+            <li><a href="insights"><ion-icon name="analytics-outline"></ion-icon> Insights</a></li>
+            <li><a href="health-wellness"><ion-icon name="heart-outline"></ion-icon> Health & Wellness</a></li>
+            <li><a href="journal-notes"><ion-icon name="document-text-outline"></ion-icon> Journal & Notes</a></li>
+            <li><a href="settings"><ion-icon name="settings-outline"></ion-icon> Settings</a></li>
+            <ul class="nav-bottom">
+                <li><a href="#" onclick="logout()"><ion-icon name="log-out-outline"></ion-icon></i> Logout</a></li>
+                <div class="nav-bottom-text">
+                    <a href="#">Terms & Conditions</a> |
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </ul>
+        </ul>
+    </nav>
+
+    <div class="mobile-nav">
+        <ul class="nav-list">
+            <li><a class="active" href="home"><ion-icon name="home"></ion-icon><span>Overview</span></a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon><span> My Profile</span></a></li>
+            <li><a href="period-tracker"><ion-icon name="calendar-outline"></ion-icon><span>Period Tracker</span></a></li>
+            <li><a href="insights"><ion-icon name="analytics-outline"></ion-icon><span>Insights</span></a></li>
+            <li><a href="health-wellness"><ion-icon name="heart-outline"></ion-icon><span>Health & Wellness</span></a></li>
+            <li><a href="journal-notes"><ion-icon name="document-text-outline"></ion-icon><span>Journal & Notes</span></a></li>
+            <li><a href="settings"><ion-icon name="document-text-outline"></ion-icon><span>Settings</span></a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-body">
+            <section class="overview">
+                <div class="overview-left">
+                    <h2>Know Your Menstrual Health</h2>
+                    <h3>Track your cycle, understand your body, and stay prepared every step of the way. <br>Click to get started</h3>
+                    <div class="overview-cta">
+                        <a href="/insights" id="get-started-btn" class="button-like-style">Get Started</a>
+                    </div>
+                </div>
+                <div class="overview-right">
+                    <span class="material-symbols-rounded">
+                        health_metrics
+                    </span>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <span class="material-symbols-rounded">calendar_today</span>
+                    <h3>Next Period</h3>
+                    <p id="next-period">March 20</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-symbols-rounded">planner_review</span>
+                    <h3>Cycle Insights</h3>
+                    <p id="cycle-insights">Current Cycle Day: 10/28</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-symbols-rounded">Fertile</span>
+                    <h3>Fertile Window</h3>
+                    <p id="fertile-window">March 8-12</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-symbols-rounded">prescriptions</span>
+                    <h3>Symptoms Log</h3>
+                    <p id="symptoms-log">None logged</p>
+                </div>
+            </section>
+
+            <section class="actions">
+                <div class="card-container">
+                    <div class="titles">
+                        <h3>Devices</h3>
+                        <p>Manage your connected devices</p>
+                    </div>
+                    <div class="device-card">
+                        <div class="device-icon">
+                            <span class="material-symbols-rounded">devices</span>
+                        </div>
+                        <h3>No Device Connected</h3>
+                        <p>Connect your wearable device or health tracker to get real-time insights.</p>
+                        <button class="connect-btn" id="connect-device-btn">Connect a Device</button>
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <div class="titles">
+                        <h3>Calendar</h3>
+                        <p>Your Monthly Cycle</p>
+                    </div>
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <span id="prev-month" class="arrow">&#10094;</span>
+                            <span id="current-month">January 2025</span>
+                            <span id="next-month" class="arrow">&#10095;</span>
+                        </div>
+                        <div class="calendar-days-of-week">
+                            <div>Sun</div>
+                            <div>Mon</div>
+                            <div>Tue</div>
+                            <div>Wed</div>
+                            <div>Thu</div>
+                            <div>Fri</div>
+                            <div>Sat</div>
+                        </div>
+                        <div class="calendar-days" id="calendar-days"></div>
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <div class="titles">
+                        <h3>Contact a Professional</h3>
+                        <p>Get expert support when you need it</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <span class="material-symbols-rounded">support_agent</span>
+                        </div>
+                        <p>Get in touch with a specialist for personalized assistance.</p>
+                        <button class="contact-btn" id="contact-professional-btn">Contact a Professional</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Get references to the elements we need to update
+        const nextPeriodEl = document.getElementById('next-period');
+        const cycleInsightsEl = document.getElementById('cycle-insights');
+        const fertileWindowEl = document.getElementById('fertile-window');
+        const symptomsLogEl = document.getElementById('symptoms-log');
+        const getStartedBtn = document.getElementById('get-started-btn');
+        const connectDeviceBtn = document.getElementById('connect-device-btn');
+        const contactProfessionalBtn = document.getElementById('contact-professional-btn');
+        const calendarDaysEl = document.getElementById('calendar-days');
+        const currentMonthEl = document.getElementById('current-month');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+
+        let currentDate = new Date();
+        let selectedDate = null; // Track the selected date
+        let periodStartDate = null; // Track period start date
+        let periodLength = 5; // Assume a default period length of 5 days
+
+
+        // Function to update the calendar display
+        function updateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            currentMonthEl.textContent = currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+            calendarDaysEl.innerHTML = ''; // Clear the calendar
+
+            // Add empty divs for the days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                calendarDaysEl.innerHTML += '<div></div>';
+            }
+
+            // Calculate period end date
+            let periodEndDate = periodStartDate ? new Date(periodStartDate.getFullYear(), periodStartDate.getMonth(), periodStartDate.getDate() + periodLength -1) : null;
+
+
+            // Add divs for each day of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.textContent = day;
+                const fullDate = new Date(year, month, day);
+
+                // Highlight selected date
+                if (selectedDate && fullDate.getTime() === selectedDate.getTime()) {
+                    dayDiv.classList.add('selected');
+                }
+
+                // Highlight period days
+                if (periodStartDate && fullDate >= periodStartDate && fullDate <= periodEndDate) {
+                    dayDiv.classList.add('period-day');
+                }
+
+                dayDiv.addEventListener('click', () => {
+                    selectedDate = fullDate;
+                    updateCalendar(); // Re-render to update selected day and styling
+                    // Update the global variables
+                    nextPeriodEl.textContent = selectedDate.toLocaleDateString();
+                    cycleInsightsEl.textContent = `Current Cycle Day: ${day}/${daysInMonth}`;
+                    fertileWindowEl.textContent = `${selectedDate.toLocaleDateString()}`;
+                    symptomsLogEl.textContent = `Selected Date: ${selectedDate.toLocaleDateString()}`;
+
+                    alert(`You selected ${selectedDate.toLocaleDateString()}`);
+                });
+                calendarDaysEl.appendChild(dayDiv);
+            }
+        }
+        updateCalendar();
+
+        // Event listeners for the previous and next month buttons
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateCalendar();
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateCalendar();
+        });
+
+
+        // Event listeners for the buttons
+        getStartedBtn.addEventListener('click', () => {
+            // Navigate to the Insights page
+            window.location.href = 'insights.html';
+        });
+
+        connectDeviceBtn.addEventListener('click', () => {
+            // Replace this with the actual logic to connect to a device.  This is a placeholder.
+            alert('Connect Device Functionality Not Implemented Yet.  Please check back later!');
+            //  window.location.href = 'health_wellness.html';
+        });
+
+        contactProfessionalBtn.addEventListener('click', () => {
+             // Replace this with the actual logic to contact a professional. This is a placeholder.
+             alert('Contact Professional Functionality Not Implemented Yet. Please check back later!');
+            // window.location.href = 'profile.html';
+        });
+
+        // Function for logout
+        function logout() {
+            alert('You have been logged out!');
+            window.location.href = 'index.html';
+        }
+
+        // Initial content for the feature cards (can be dynamic)
+        nextPeriodEl.textContent = 'March 20';
+        cycleInsightsEl.textContent = 'Current Cycle Day: 10/28';
+        fertileWindowEl.textContent = 'March 8-12';
+        symptomsLogEl.textContent = 'None logged';
+
+        // Simulate setting period start date.  In a real application, this would come from user input or device data.
+        periodStartDate = new Date(2024, 2, 15);  // Example: Period started on March 15th 2024
+        updateCalendar(); // Update calendar to show period days
+    </script>
+</body>
+</html>

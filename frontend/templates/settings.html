@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumaLog - Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@5.5.4/dist/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for Settings page */
+        .settings-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .settings-header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e6addb;
+            font-family: 'Noto Serif', serif;
+            margin-bottom: 10px;
+        }
+
+        .settings-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .settings-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            font-family: 'Noto Serif', serif;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .setting-label {
+            font-size: 16px;
+            color: #555;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #e6addb;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 0 2px rgba(230, 173, 219, 0.2);
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 24px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-select {
+            background-color: #fff;
+            color: #555;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            width: 200px; /* Adjust as needed */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-select:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #555; /* Dropdown arrow color */
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+            z-index: 1;
+            width: 200px; /* Match the select width */
+            overflow: auto;
+            max-height: 200px; /* Limit dropdown height */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        }
+
+        .dropdown.open .dropdown-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+
+        .dropdown-options li {
+            padding: 10px;
+            font-size: 16px;
+            color: #555;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .dropdown-options li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-options li.selected {
+            background-color: #e6addb;
+            color: #fff;
+        }
+        .profile-section{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .profile-picture{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .profile-picture img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .edit-profile-button {
+            background-color: #e6addb;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-profile-button:hover {
+            background-color: #d18ac5;
+        }
+        .danger-zone {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fef0f0;
+        }
+
+        .danger-zone h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #b91c1c;
+            margin-bottom: 15px;
+            font-family: 'Noto Serif', serif;
+        }
+
+        .delete-account-button {
+            background-color: #b91c1c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-account-button:hover {
+            background-color: #991b1b;
+        }
+
+        @media (max-width: 640px) {
+            .settings-header h1 {
+                font-size: 24px;
+            }
+
+            .settings-header p {
+                font-size: 14px;
+            }
+
+            .settings-title {
+                font-size: 18px;
+            }
+
+            .setting-label {
+                font-size: 14px;
+            }
+             .dropdown-select,
+            .dropdown-options,
+            .dropdown-options li{
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-right">
+            <div class="logo">
+                <img src="/frontend/assets/img/logo.png" alt="Luma Log System">
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="notification-container">
+                <ion-icon name="notifications-outline"></ion-icon>
+                <span class="notification-counter">3</span>
+            </div>
+            <div class="profile-section">
+                <div class="profile-picture">
+                    <img src="/frontend/assets/img/profile_placeholder.png" alt="Profile Picture">
+                </div>
+                <span class="profile-name">Jane Doe</span>
+                <button class="edit-profile-button">Edit Profile</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <ul class="nav-list">
+            <li><a href="home"><ion-icon name="home"></ion-icon> Overview</a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon> My Profile</a></li>
+            <li><a href="period-tracker."><ion-icon name="calendar-outline"></ion-icon> Period Tracker</a></li>
+            <li><a href="insights"><ion-icon name="analytics-outline"></ion-icon> Insights</a></li>
+            <li><a href="health-wellness"><ion-icon name="heart-outline"></ion-icon> Health & Wellness</a></li>
+            <li><a href="journal-notes"><ion-icon name="document-text-outline"></ion-icon> Journal & Notes</a></li>
+            <li><a class="active" href="settings"><ion-icon name="settings-outline"></ion-icon> Settings</a></li>
+            <ul class="nav-bottom">
+                <li><a href="#" onclick="logout()"><ion-icon name="log-out-outline"></ion-icon></i> Logout</a></li>
+                <div class="nav-bottom-text">
+                    <a href="#">Terms & Conditions</a> |
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </ul>
+        </ul>
+    </nav>
+
+    <div class="mobile-nav">
+        <ul class="nav-list">
+            <li><a href="home"><ion-icon name="home"></ion-icon><span>Overview</span></a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon> My Profile</a></li>
+            <li><a href="period-tracker"><ion-icon name="calendar-outline"></ion-icon><span>Period Tracker</span></a></li>
+            <li><a href="insights"><ion-icon name="analytics-outline"></ion-icon><span>Insights</span></a></li>
+            <li><a href="health-wellness"><ion-icon name="heart-outline"></ion-icon><span>Health & Wellness</span></a></li>
+            <li><a class="active" href="journal-notes"><ion-icon name="document-text-outline"></ion-icon><span>Journal & Notes</span></a></li>
+            <li><a class="active" href="settings"><ion-icon name="settings-outline"></ion-icon> Settings</a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="settings-container">
+            <div class="settings-header">
+                <h1>Settings</h1>
+                <p>Manage your app preferences and account settings.</p>
+            </div>
+
+            <section class="settings-section">
+                <h2 class="settings-title">Account Settings</h2>
+                <div class="setting-item">
+                    <label class="setting-label">Email Notifications</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="email-notifications" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">Push Notifications</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="push-notifications">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">Language</label>
+                    <div class="dropdown">
+                        <div class="dropdown-select" id="language-select">
+                            <span>English</span>
+                        </div>
+                        <ul class="dropdown-options" id="language-options">
+                            <li data-value="en">English</li>
+                            <li data-value="es">Español</li>
+                            <li data-value="fr">Français</li>
+                            <li data-value="de">Deutsch</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">Time Zone</label>
+                    <div class="dropdown">
+                        <div class="dropdown-select" id="timezone-select">
+                            <span>(GMT-5:00) Eastern Time (US & Canada)</span>
+                        </div>
+                        <ul class="dropdown-options" id="timezone-options">
+                            <li data-value="America/New_York">(GMT-05:00) Eastern Time (US & Canada)</li>
+                            <li data-value="America/Los_Angeles">(GMT-08:00) Pacific Time (US & Canada)</li>
+                            <li data-value="Europe/London">(GMT+00:00) London</li>
+                            <li data-value="Asia/Tokyo">(GMT+09:00) Tokyo</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">Change Password</label>
+                    <button class="edit-profile-button">Change Password</button>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2 class="settings-title">App Preferences</h2>
+                <div class="setting-item">
+                    <label class="setting-label">Theme</label>
+                     <div class="dropdown">
+                        <div class="dropdown-select" id="theme-select">
+                            <span>Light</span>
+                        </div>
+                        <ul class="dropdown-options" id="theme-options">
+                            <li data-value="light">Light</li>
+                            <li data-value="dark">Dark</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">Font Size</label>
+                    <div class="dropdown">
+                        <div class="dropdown-select" id="font-size-select">
+                            <span>Medium</span>
+                        </div>
+                        <ul class="dropdown-options" id="font-size-options">
+                            <li data-value="small">Small</li>
+                            <li data-value="medium">Medium</li>
+                            <li data-value="large">Large</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">Show Full Name</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="show-full-name">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </section>
+            <section class="settings-section danger-zone">
+                <h2 class="settings-title">Danger Zone</h2>
+                <div class="setting-item">
+                    <label class="setting-label">Delete Account</label>
+                    <button class="delete-account-button">Delete Your Account</button>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script>
+        const languageSelect = document.getElementById('language-select');
+        const languageOptions = document.getElementById('language-options');
+        const themeSelect = document.getElementById('theme-select');
+        const themeOptions = document.getElementById('theme-options');
+        const fontSizeSelect = document.getElementById('font-size-select');
+        const fontSizeOptions = document.getElementById('font-size-options');
+        const emailNotificationsToggle = document.getElementById('email-notifications');
+        const pushNotificationsToggle = document.getElementById('push-notifications');
+        const showFullNameToggle = document.getElementById('show-full-name');
+        const timezoneSelect = document.getElementById('timezone-select');
+        const timezoneOptions = document.getElementById('timezone-options');
+        const profileNameSpan = document.querySelector('.profile-name');
+        const editProfileButton = document.querySelector('.edit-profile-button');
+        const deleteAccountButton = document.querySelector('.delete-account-button');
+
+        let userName = "Jane Doe"; // Default user name
+        let isEditingProfile = false;
+
+        languageSelect.addEventListener('click', () => {
+            languageOptions.classList.toggle('open');
+        });
+
+        themeSelect.addEventListener('click', () => {
+            themeOptions.classList.toggle('open');
+        });
+
+        fontSizeSelect.addEventListener('click', () => {
+            fontSizeOptions.classList.toggle('open');
+        });
+        timezoneSelect.addEventListener('click', () => {
+            timezoneOptions.classList.toggle('open');
+        });
+
+        languageOptions.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                const value = event.target.dataset.value;
+                languageSelect.querySelector('span').textContent = event.target.textContent;
+                languageOptions.classList.remove('open');
+                 // Save selected language
+                localStorage.setItem('language', value);
+            }
+        });
+
+        themeOptions.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                const value = event.target.dataset.value;
+                themeSelect.querySelector('span').textContent = event.target.textContent;
+                themeOptions.classList.remove('open');
+                // Save selected theme
+                localStorage.setItem('theme', value);
+                // Apply theme
+                applyTheme(value);
+            }
+        });
+
+        fontSizeOptions.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                const value = event.target.dataset.value;
+                fontSizeSelect.querySelector('span').textContent = event.target.textContent;
+                fontSizeOptions.classList.remove('open');
+                // Save font size
+                localStorage.setItem('fontSize', value);
+                // Apply font size
+                applyFontSize(value);
+            }
+        });
+        timezoneOptions.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                const value = event.target.dataset.value;
+                timezoneSelect.querySelector('span').textContent = event.target.textContent;
+                timezoneOptions.classList.remove('open');
+                localStorage.setItem('timezone', value);
+            }
+        });
+
+        emailNotificationsToggle.addEventListener('change', (event) => {
+             // Save email notification setting
+             localStorage.setItem('emailNotifications', event.target.checked);
+        });
+
+        pushNotificationsToggle.addEventListener('change', (event) => {
+            // Save push notification setting
+            localStorage.setItem('pushNotifications', event.target.checked);
+        });
+        showFullNameToggle.addEventListener('change', (event) => {
+            localStorage.setItem('showFullName', event.target.checked);
+        });
+
+        editProfileButton.addEventListener('click', () => {
+            if (!isEditingProfile) {
+                // Change button to save
+                editProfileButton.textContent = "Save Profile";
+                //change name to input
+                const input = document.createElement('input');
+                input.type = "text";
+                input.value = userName;
+                input.className = "profile-name-input";
+                profileNameSpan.replaceWith(input);
+                isEditingProfile = true;
+            } else {
+                 //save button
+                const input = document.querySelector('.profile-name-input');
+                userName = input.value;
+                profileNameSpan.textContent = userName;
+                input.replaceWith(profileNameSpan);
+                editProfileButton.textContent = "Edit Profile";
+                isEditingProfile = false;
+                localStorage.setItem('userName', userName);
+            }
+        });
+        deleteAccountButton.addEventListener('click', () => {
+            const confirmation = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+            if (confirmation) {
+                // Handle account deletion (e.g., send request to server)
+                alert("Account deleted successfully (placeholder).");
+                // Redirect to home or login page
+                window.location.href = "index.html"; // Replace with your actual home page
+            }
+        });
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+        function applyFontSize(size) {
+            switch (size) {
+                case 'small':
+                    document.body.classList.remove('medium-font', 'large-font');
+                    document.body.classList.add('small-font');
+                    break;
+                case 'medium':
+                    document.body.classList.remove('small-font', 'large-font');
+                    document.body.classList.add('medium-font');
+                    break;
+                case 'large':
+                    document.body.classList.remove('small-font', 'medium-font');
+                    document.body.classList.add('large-font');
+                    break;
+            }
+        }
+
+        function loadSettings() {
+            const savedLanguage = localStorage.getItem('language');
+            const savedTheme = localStorage.getItem('theme');
+            const savedFontSize = localStorage.getItem('fontSize');
+            const savedEmailNotifications = localStorage.getItem('emailNotifications');
+            const savedPushNotifications = localStorage.getItem('pushNotifications');
+            const savedShowFullName = localStorage.getItem('showFullName');
+            const savedTimezone = localStorage.getItem('timezone');
+            const savedUserName = localStorage.getItem('userName');
+
+            if (savedLanguage) {
+                languageSelect.querySelector('span').textContent = savedLanguage;
+                 const selectedOption = document.querySelector(`.dropdown-options li[data-value="${savedLanguage}"]`);
+                  if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+            }
+            if (savedTheme) {
+                themeSelect.querySelector('span').textContent = savedTheme;
+                applyTheme(savedTheme);
+                 const selectedOption = document.querySelector(`.dropdown-options li[data-value="${savedTheme}"]`);
+                  if (selectedOption) {
+                     selectedOption.classList.add('selected');
+                  }
+            }
+            if (savedFontSize) {
+                fontSizeSelect.querySelector('span').textContent = savedFontSize;
+                applyFontSize(savedFontSize);
+                 const selectedOption = document.querySelector(`.dropdown-options li[data-value="${savedFontSize}"]`);
+                if (selectedOption) {
+                     selectedOption.classList.add('selected');
+                }
+
+            }
+            if (savedEmailNotifications !== null) {
+                emailNotificationsToggle.checked = savedEmailNotifications === 'true';
+            }
+            if (savedPushNotifications !== null) {
+                pushNotificationsToggle.checked = savedPushNotifications === 'true';
+            }
+            if (savedShowFullName !== null) {
+                showFullNameToggle.checked = savedShowFullName === 'true';
+            }
+            if (savedTimezone) {
+                timezoneSelect.querySelector('span').textContent = savedTimezone;
+                 const selectedOption = document.querySelector(`.dropdown-options li[data-value="${savedTimezone}"]`);
+                  if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+            }
+            if(savedUserName){
+                userName = savedUserName;
+                profileNameSpan.textContent = userName;
+            }
+        }
+        function logout() {
+            // Implement your logout functionality here
+            alert('Logging out...');
+            // For demonstration purposes, you can redirect to the login page
+            window.location.href = 'login.html'; // Replace with your actual login page URL
+        }
+
+        // Load saved settings
+        loadSettings();</script>
+</body>
+</html>

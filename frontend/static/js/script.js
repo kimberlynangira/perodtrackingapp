@@ -11,7 +11,8 @@ if (togglePasswordButton) {
 }
 
 // Login functionality
-const loginForm = document.getElementById('loginForm');
+const loginForm = document.getElementById('login-form');
+const errorMessage = document.getElementById('error-message');
 
 if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
@@ -36,9 +37,9 @@ if (loginForm) {
                     console.log(data.message);
                     // **Session Handling (Example - Adjust for your server)**
                     // If the server returns a session ID or token
-                    // localStorage.setItem('sessionId', data.sessionId);  // Insecure example
+                    // localStorage.setItem('sessionId', data.sessionId);   // Insecure example
                     // **Ideally, use HttpOnly, Secure cookies**
-                    window.location.href = 'pages/home.html';
+                    window.location.href = '/home'; // Changed redirection path
                 } else {
                     // Display login error message
                     const loginErrorMessage = document.getElementById('login-error-message');
@@ -106,8 +107,8 @@ if (prevMonthButton) {
         .then(response => {
              if (!response.ok) {
                 throw new Error('Network response was not ok');
-              }
-              return response.json();
+             }
+             return response.json();
         })
         .then(data => {
             let periodDates = [];

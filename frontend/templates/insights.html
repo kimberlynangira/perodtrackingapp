@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumaLog - Insights</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@5.5.4/dist/css/ionicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <style>
+        /* Custom styles for Insights page */
+        .insights-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .insights-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .insights-header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e6addb;
+            font-family: 'Noto Serif', serif;
+            margin-bottom: 10px;
+        }
+
+        .insights-header p {
+            font-size: 16px;
+            color: #555;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .insight-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .insight-section:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        .insight-section:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        .insight-section:nth-child(4) {
+            animation-delay: 0.9s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .insight-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            font-family: 'Noto Serif', serif;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .insight-content {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.7;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .insight-list {
+            padding-left: 20px;
+            margin-bottom: 15px;
+            list-style-position: inside;
+        }
+
+        .insight-list li {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 8px;
+        }
+        .insight-list li::marker {
+            color: #e6addb; /* Change this to the color you want */
+            font-size: 1.2em; /* Adjust size if needed */
+        }
+
+        .data-visualization {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .data-visualization h3 {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+            font-family: 'Noto Serif', serif;
+        }
+
+        /* Placeholder for charts/graphs */
+        .chart-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @media (max-width: 640px) {
+            .insights-header h1 {
+                font-size: 24px;
+            }
+            .insights-header p {
+                font-size: 14px;
+            }
+            .insight-title {
+                font-size: 18px;
+            }
+            .insight-content, .insight-list li {
+                font-size: 14px;
+            }
+        }
+
+        /* Interactive elements */
+        .interactive-chart-container {
+            width: 100%;
+            height: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Ensure chart doesn't overflow container */
+        }
+
+        .interactive-chart-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .slider-container {
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .slider-label {
+            font-size: 14px;
+            color: #555;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #e6addb;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #e6addb;
+            cursor: pointer;
+        }
+
+        input[type="range"]:focus::-webkit-slider-thumb {
+            box-shadow: 0 0 0 3px rgba(230, 173, 219, 0.3);
+        }
+
+        input[type="range"]:focus::-moz-range-thumb {
+            box-shadow: 0 0 0 3px rgba(230, 173, 219, 0.3);
+        }
+
+        input[type="range"]:hover,
+        input[type="range"]:active {
+            opacity: 1;
+        }
+
+        .age-text {
+            font-size: 18px;
+            color: #333;
+            font-family: 'Noto Serif', serif;
+            margin-top: 10px;
+        }
+
+        #chart-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: 'Noto Serif', serif;
+            text-align: center;
+        }
+        .self-care-tips {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+        }
+
+        .self-care-tips h2{
+             font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            font-family: 'Noto Serif', serif;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .self-care-tips ul{
+            list-style-position: inside;
+            padding-left: 0;
+        }
+
+        .self-care-tips li {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 12px;
+        }
+
+        .self-care-tips li::marker {
+            color: #e6addb; /* Change this to the color you want */
+            font-size: 1.2em; /* Adjust size if needed */
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-right">
+            <div class="logo">
+                <img src="/frontend/assets/img/logo.png" alt="Luma Log System">
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="notification-container">
+                <ion-icon name="notifications-outline"></ion-icon>
+                <span class="notification-counter">3</span>
+            </div>
+            <div class="profile-section">
+                <ion-icon name="person-circle-outline"></ion-icon>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <ul class="nav-list">
+            <li><a href="home"><ion-icon name="home"></ion-icon> Overview</a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon> My Profile</a></li>
+            <li><a href="period-tracker"><ion-icon name="calendar-outline"></ion-icon> Period Tracker</a></li>
+            <li><a class="active" href="insights"><ion-icon name="analytics-outline"></ion-icon> Insights</a></li>
+            <li><a href="health-wellness"><ion-icon name="heart-outline"></ion-icon> Health & Wellness</a></li>
+            <li><a href="journal-notes"><ion-icon name="document-text-outline"></ion-icon> Journal & Notes</a></li>
+            <li><a href="settings"><ion-icon name="settings-outline"></ion-icon> Settings</a></li>
+            <ul class="nav-bottom">
+                <li><a href="#" onclick="logout()"><ion-icon name="log-out-outline"></ion-icon></i> Logout</a></li>
+                <div class="nav-bottom-text">
+                    <a href="#">Terms & Conditions</a> |
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </ul>
+        </ul>
+    </nav>
+
+    <div class="mobile-nav">
+        <ul class="nav-list">
+            <li><a href="home"><ion-icon name="home"></ion-icon><span>Overview</span></a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon><span>My Profile</span></a></li>
+            <li><a href="period-tracker"><ion-icon name="calendar-outline"></ion-icon><span>Period Tracker</span></a></li>
+            <li><a class="active" href="insights"><ion-icon name="analytics-outline"></ion-icon><span>Insights</span></a></li>
+            <li><a href="health-wellness"><ion-icon name="heart-outline"></ion-icon><span>Health & Wellness</span></a></li>
+            <li><a href="journal-notes"><ion-icon name="document-text-outline"></ion-icon><span>Journal & Notes</span></a></li>
+            <li><a href="settings"><ion-icon name="settings-outline"></ion-icon><span>Settings</span></a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="insights-container">
+            <div class="insights-header">
+                <h1>Your Period Insights Through the Years</h1>
+                <p>Explore how your menstrual cycle evolves from adolescence to menopause.</p>
+            </div>
+
+            <section class="insight-section">
+                <h2 class="insight-title">The Teenage Years (Menarche)</h2>
+                <p class="insight-content">
+                    Menarche, the onset of menstruation, typically occurs between ages 10 and 16. During this time, cycles may be irregular as the body establishes hormonal balance.
+                </p>
+                <ul class="insight-list">
+                    <li>Expect cycle length and flow variability.</li>
+                    <li>Cramps and mood swings may begin and change.</li>
+                    <li>Tracking helps understand changes and build healthy habits.</li>
+                </ul>
+                <div class="data-visualization">
+                    <h3>Menstrual Cycle Variability in Adolescence</h3>
+                    <div class="chart-placeholder">
+                        [Teenage Cycle Variability Chart]
+                    </div>
+                </div>
+            </section>
+
+            <section class="insight-section">
+                <h2 class="insight-title">The Reproductive Years (20s-40s)</h2>
+                <p class="insight-content">
+                    In your 20s and 30s, cycles tend to become more regular. This is the prime time for fertility, and hormonal fluctuations play a key role in the menstrual cycle.
+                </p>
+                <ul class="insight-list">
+                    <li>Cycle length is usually more predictable.</li>
+                    <li>PMS symptoms may become more pronounced.</li>
+                    <li>Tracking is valuable for family planning.</li>
+                </ul>
+                <div class="data-visualization">
+                    <h3>Hormone Levels During Reproductive Years</h3>
+                    <div class="chart-placeholder">
+                        [Reproductive Hormone Chart]
+                    </div>
+                </div>
+            </section>
+
+            <section class="insight-section">
+                <h2 class="insight-title">Perimenopause (40s-50s)</h2>
+                <p class="insight-content">
+                    Perimenopause is the transition to menopause.  Hormone levels fluctuate significantly, leading to changes in the menstrual cycle.
+                </p>
+                <ul class="insight-list">
+                    <li>Cycles may become irregular.</li>
+                    <li>Expect hot flashes and sleep disturbances.</li>
+                    <li>Tracking helps in understanding changes.</li>
+                </ul>
+                <div class="data-visualization">
+                    <h3>Menstrual Cycle Changes in Perimenopause</h3>
+                    <div class="chart-placeholder">
+                        [Perimenopause Cycle Chart]
+                    </div>
+                </div>
+            </section>
+
+            <section class="insight-section">
+                <h2 class="insight-title">Menopause and Beyond (50s+)</h2>
+                <p class="insight-content">
+                   Menopause is marked by the cessation of menstruation.  While periods stop, long-term health and well-being remain important.
+                </p>
+                <ul class="insight-list">
+                    <li>Menstruation has ceased.</li>
+                    <li>Focus on post-menopausal health.</li>
+                    <li>Health tracking is still useful.</li>
+                </ul>
+            </section>
+
+            <section class="insight-section">
+                <h2 class="insight-title">Interactive Cycle Analysis</h2>
+                <p class="insight-content">
+                    Use the slider to explore how average cycle length changes with age. See how your own cycle compares!
+                </p>
+                <div class="interactive-chart-container">
+                    <h3 id="chart-title">Average Cycle Length vs. Age</h3>
+                    <div class="interactive-chart-placeholder">
+                        [Interactive Chart Placeholder]
+                    </div>
+                </div>
+                <div class="slider-container">
+                    <label for="age-slider" class="slider-label">Select Your Age: <span id="age-value">25</span></label>
+                    <input type="range" id="age-slider" min="15" max="60" value="25">
+                    <p class="age-text">Average Cycle Length: <span id="cycle-length-display">28</span> days</p>
+                </div>
+            </section>
+            <section class="self-care-tips">
+                <h2>Basic Self-Care Tips for a Happy System</h2>
+                <ul>
+                    <li>Eat a balanced diet: Focus on whole foods.</li>
+                    <li>Stay hydrated: Drink plenty of water.</li>
+                    <li>Exercise regularly: Aim for moderate activity.</li>
+                    <li>Get enough sleep: Prioritize rest.</li>
+                    <li>Manage stress: Practice relaxation techniques.</li>
+                    <li>Track your cycle: Understand your body.</li>
+                    <li>Maintain hygiene: Keep your body clean.</li>
+                    <li>Avoid smoking and excessive alcohol.</li>
+                    <li>Schedule regular check-ups: See your doctor.</li>
+                    <li>Listen to your body: Pay attention to symptoms.</li>
+                </ul>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        function logout() {
+            // Implement your logout functionality here
+            alert('Logging out...');
+            // For demonstration purposes, you can redirect to the login page
+            window.location.href = 'login.html'; // Replace with your actual login page URL
+        }
+
+        // --- Interactive Chart ---
+        const ageSlider = document.getElementById('age-slider');
+        const ageValueDisplay = document.getElementById('age-value');
+        const cycleLengthDisplay = document.getElementById('cycle-length-display');
+        const chartTitle = document.getElementById('chart-title');
+
+        // Sample data (replace with actual data)
+        const cycleLengthData = {
+            15: 29,
+            20: 28,
+            25: 28,
+            30: 29,
+            35: 30,
+            40: 32,
+            45: 35,
+            50: 30,
+            55: 28,
+            60: 27
+        };
+
+        // Initial values
+        let currentAge = parseInt(ageSlider.value);
+        ageValueDisplay.textContent = currentAge;
+        cycleLengthDisplay.textContent = cycleLengthData[currentAge] || 28;
+
+        ageSlider.addEventListener('input', function() {
+            currentAge = parseInt(ageSlider.value);
+            ageValueDisplay.textContent = currentAge;
+            const cycleLength = cycleLengthData[currentAge] || 28; // Default to 28 if age not found
+            cycleLengthDisplay.textContent = `${cycleLength}`;
+
+            // Update chart title
+            if (currentAge < 20) {
+                chartTitle.textContent = "Average Cycle Length for Teens";
+            } else if (currentAge < 40) {
+                chartTitle.textContent = "Average Cycle Length for Adults";
+            } else if (currentAge < 50) {
+                chartTitle.textContent = "Average Cycle Length in Perimenopause";
+            } else {
+                chartTitle.textContent = "Average Cycle Length in Menopause";
+            }
+
+            // In a real application, you would update the chart here with new data
+            // based on the selected age.  This is a placeholder.
+        });
+
+        // --- End Interactive Chart ---
+
+    </script>
+</body>
+</html>
+

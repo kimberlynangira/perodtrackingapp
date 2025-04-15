@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Wellness for Women</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@5.5.4/dist/css/ionicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <style>
+        /* Custom styles for Health & Wellness page */
+        .health-wellness-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e6addb;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease, pulse 2s infinite alternate;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.04);
+            }
+        }
+
+        .advice-section {
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: slideInLeft 0.5s forwards;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .advice-section:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .advice-section:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .advice-section:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .advice-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-family: 'Noto Serif', serif;
+        }
+
+        .advice-title i {
+            margin-right: 10px;
+            color: #e6addb;
+            font-size: 24px;
+        }
+
+        .advice-text {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form-container h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Noto Serif', serif;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .contact-form .form-group label {
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form .form-group input,
+        .contact-form .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form .form-group input:focus,
+        .contact-form .form-group textarea:focus {
+            outline: none;
+            border-color: #e6addb;
+            box-shadow: 0 0 0 2px rgba(230, 173, 219, 0.25);
+        }
+
+        .contact-form .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .contact-form button {
+            background-color: #e6addb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            align-self: center;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form button:hover {
+            background-color: #efb1eb;
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 640px) {
+            .health-wellness-container {
+                padding: 15px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .advice-title {
+                font-size: 16px;
+            }
+
+            .advice-text {
+                font-size: 14px;
+            }
+        }
+
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-right">
+            <div class="logo">
+                <img src="/Users/USER/perodtrackingapp/frontend/assets/img/logo.png" alt="Luma Log System">
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="notification-container">
+                <ion-icon name="notifications-outline"></ion-icon>
+                <span class="notification-counter">3</span>
+            </div>
+            <div class="profile-section">
+                <ion-icon name="person-circle-outline"></ion-icon>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <ul class="nav-list">
+            <li><a href="home"><ion-icon name="home"></ion-icon> Overview</a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon> My Profile</a></li>
+            <li><a href="period-tracker"><ion-icon name="calendar-outline"></ion-icon> Period Tracker</a></li>
+            <li><a href="insights"><ion-icon name="analytics-outline"></ion-icon> Insights</a></li>
+            <li><a class="active" href="health-wellness"><ion-icon name="heart-outline"></ion-icon> Health & Wellness</a></li>
+            <li><a href="journal-notes"><ion-icon name="document-text-outline"></ion-icon> Journal & Notes</a></li>
+            <li><a href="settings"><ion-icon name="settings-outline"></ion-icon> Settings</a></li>
+            <ul class="nav-bottom">
+                <li><a href="#" onclick="logout()"><ion-icon name="log-out-outline"></ion-icon></i> Logout</a></li>
+                <div class="nav-bottom-text">
+                    <a href="#">Terms & Conditions</a> |
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </ul>
+        </ul>
+    </nav>
+
+    <div class="mobile-nav">
+        <ul class="nav-list">
+            <li><a href="home"><ion-icon name="home"></ion-icon><span>Overview</span></a></li>
+            <li><a href="profile"><ion-icon name="person-outline"></ion-icon><span>My Profile</span></a></li>
+            <li><a href="period-tracker"><ion-icon name="calendar-outline"></ion-icon><span>Period Tracker</span></a></li>
+            <li><a href="insights"><ion-icon name="analytics-outline"></ion-icon><span>Insights</span></a></li>
+            <li><a class="active" href="health-wellness"><ion-icon name="heart-outline"></ion-icon><span>Health & Wellness</span></a></li>
+            <li><a href="journal-notes"><ion-icon name="document-text-outline"></ion-icon><span>Journal & Notes</span></a></li>
+            <li><a href="settings"><ion-icon name="settings-outline"></ion-icon><span>Settings</span></a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="health-wellness-container">
+            <h1 class="section-title">Health & Wellness for Women</h1>
+
+            <section class="advice-section">
+                <h2 class="advice-title"><i class="fas fa-heart"></i>Understanding Your Menstrual Cycle</h2>
+                <p class="advice-text">
+                    Your menstrual cycle is a complex process that affects many aspects of your health. It's more than just your period! Understanding the different phases can help you better manage your physical and emotional well-being. The average cycle is 28 days, but it can vary.
+                </p>
+                <div class="img-container">
+                    <img src="/static/assets/img/menstrual_cycle.jpg" alt="Menstrual Cycle" width="400">
+                </div>
+                <p class="advice-text">
+                    <strong>Key phases include:</strong>
+                </p>
+                <ul class="advice-text">
+                    <li><strong>Menstruation (Days 1-5):</strong> This is when you have your period. Hormone levels are low.</li>
+                    <li><strong>Follicular Phase (Days 6-14):</strong> Your body prepares to release an egg. Estrogen rises.</li>
+                    <li><strong>Ovulation (Around Day 14):</strong> An egg is released. This is when you're most fertile.</li>
+                    <li><strong>Luteal Phase (Days 15-28):</strong> The body prepares for a possible pregnancy. Progesterone rises.</li>
+                </ul>
+                <p class="advice-text">
+                    Tracking your cycle can help you predict your period, identify patterns, and understand changes in your body.
+                </p>
+            </section>
+
+            <section class="advice-section">
+                <h2 class="advice-title"><i class="fas fa-utensils"></i>Healthy Habits for Overall Well-being</h2>
+                <p class="advice-text">
+                    Here are some general health tips:
+                </p>
+                <ul class="advice-text">
+                    <li><strong>Balanced Diet:</strong> Eat a variety of fruits, vegetables, whole grains, and lean protein.</li>
+                    <li><strong>Regular Exercise:</strong> Aim for at least 30 minutes of moderate-intensity exercise most days of the week.</li>
+                    <li><strong>Adequate Sleep:</strong> Get 7-8 hours of quality sleep each night.</li>
+                    <li><strong>Stress Management:</strong> Practice relaxation techniques like yoga, meditation, or deep breathing.</li>
+                    <li><strong>Stay Hydrated:</strong> Drink plenty of water throughout the day.</li>
+                </ul>
+                <div class="img-container">
+                    <img src="/static/assets/img/healthyfood.jpg" alt="Healthy Food" width="400">
+                    <img src="/static/assets/img/healthy_breakfast.jpg" alt="Healthy Breakfast" width="400">
+                </div>
+            </section>
+
+            <section class="advice-section">
+                <h2 class="advice-title"><i class="fas fa-female"></i>Tips for Menstrual Health</h2>
+                <p class="advice-text">
+                    Here are some tips for supporting your menstrual health:
+                </p>
+                <ul class="advice-text">
+                    <li><strong>Track Your Cycle:</strong> Use a calendar or app to monitor your periods, symptoms, and flow.</li>
+                    <li><strong>Manage Pain:</strong> Over-the-counter pain relievers, heat packs, and gentle exercise can help with cramps.</li>
+                    <li><strong>Eat Iron-Rich Foods:</strong> Include foods like red meat, beans, and leafy greens to replace iron lost during your period.</li>
+                    <li><strong>Stay Hydrated:</strong> Drinking water can reduce bloating and other symptoms.</li>
+                    <li><strong>Listen to Your Body:</strong> Rest when you need to, and adjust your activities based on how you feel.</li>
+                </ul>
+            </section>
+
+            <section class="advice-section">
+                <h2 class="advice-title"><i class="fas fa-stethoscope"></i>When to Seek Medical Advice</h2>
+                <p class="advice-text">
+                    It's important to consult a healthcare professional if you experience any of the following:
+                </p>
+                <ul class="advice-text">
+                    <li>Severe pelvic pain</li>
+                    <li>Heavy or prolonged bleeding</li>
+                    <li>Irregular or missed periods</li>
+                    <li>Unusual vaginal discharge</li>
+                    <li>Concerns about your menstrual cycle or reproductive health</li>
+                </ul>
+            </section>
+
+            <div class="contact-form-container">
+                <h2>Contact Us</h2>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+
+            // In a real application, you would send this data to a server using fetch or AJAX.
+            // For this example, we'll just log it to the console.
+            console.log(formData);
+
+            alert('Thank you for your message! We will get back to you as soon as possible.');
+            document.getElementById('contactForm').reset(); // Clear the form
+        });
+    </script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+</body>
+</html>
+
