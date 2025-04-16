@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import logging
 
+
 # Configure logging (if not already configured)
 logging.basicConfig(level=logging.DEBUG)
 
@@ -10,6 +11,7 @@ def load_model(model_path):
     """Loads the trained machine learning model."""
     try:
         model = joblib.load(model_path)
+        print(model)
         logging.info(f"Model loaded successfully from {model_path}")
         return model
     except FileNotFoundError:
@@ -39,8 +41,8 @@ def predict_cycle_length(model, data):
         # the model was trained on.
         expected_columns = [
             'user_id_encoded', 'cycle_start_month', 'period_duration',
-            'days_until_ovulation', 'flow_heavy', 'flow_light',
-            'flow_medium', 'symptom_acne', 'symptom_mood swings',
+            'days_until_ovulation', 'flow_Heavy', 'flow_Light',
+            'flow_Medium', 'symptom_acne', 'symptom_mood swings',
             'symptom_fatigue', 'symptom_cramps', 'symptom_headache',
             'symptom_breast tenderness', 'symptom_bloating',
             'symptom_insomnia', 'mean_cycle_length',
@@ -69,8 +71,9 @@ def predict_cycle_length(model, data):
             raise ValueError(error_message)
 
         prediction = model.predict(data_df)[0]
+        logging.debug(f" Prediction: {prediction}")
         return float(prediction)
-    except (KeyError, ValueError, TypeError, pd.core.base.DataError) as e:
+    except (KeyError, ValueError, TypeError) as e:
         # Log the specific error
         logging.error(f"Error during prediction: {e}")
         return None  # Return None on error

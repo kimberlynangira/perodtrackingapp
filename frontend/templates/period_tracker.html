@@ -539,7 +539,7 @@
                 let hasErrors = false;
                 for (const key in data) {
                     const errorDivId = `${key}-error`;
-                    console.log(errorDivId);
+                    // console.log(errorDivId);
                     const errorDiv = document.getElementById(errorDivId);
                     if (data[key] < 0 || data[key] > 100) {
                         hasErrors = true;

@@ -10,6 +10,8 @@ from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
+from model.model_utils import load_model, predict_cycle_length
+
 # Database Configuration
 DATABASE = 'users.db'
 # Frontend Directory
@@ -35,7 +37,7 @@ Session(app)
 # Load the Model
 model = None
 try:
-    # model = load_model('model/cycle_length_rf_model.joblib')  # commented out to avoid errors if model file is missing
+    model = load_model('model/cycle_length_rf_model.joblib')  # commented out to avoid errors if model file is missing
     logging.info("Model loading is currently disabled.")
 except Exception as e:
     logging.error(f"Error loading model: {e}")
@@ -275,15 +277,15 @@ def predict_cycle():
             'cycle_start_month': int(data.get('cycle_start_month')),
             'period_duration': float(data.get('period_duration')),
             'days_until_ovulation': float(data.get('days_until_ovulation')),
-            'flow_heavy': float(data.get('flow_heavy')),
-            'flow_light': float(data.get('flow_light')),
-            'flow_medium': float(data.get('flow_medium')),
+            'flow_Heavy': float(data.get('flow_heavy')),
+            'flow_Light': float(data.get('flow_light')),
+            'flow_Medium': float(data.get('flow_medium')),
             'symptom_acne': float(data.get('symptom_acne')),
-            'symptom_mood_swings': float(data.get('symptom_mood_swings')),
+            'symptom_mood swings': float(data.get('symptom_mood_swings')),
             'symptom_fatigue': float(data.get('symptom_fatigue')),
             'symptom_cramps': float(data.get('symptom_cramps')),
             'symptom_headache': float(data.get('symptom_headache')),
-            'symptom_breast_tenderness': float(data.get('symptom_breast_tenderness')),
+            'symptom_breast tenderness': float(data.get('symptom_breast_tenderness')),
             'symptom_bloating': float(data.get('symptom_bloating')),
             'symptom_insomnia': float(data.get('symptom_insomnia')),
             'mean_cycle_length': float(data.get('mean_cycle_length')),
