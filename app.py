@@ -255,14 +255,12 @@ def predict_cycle():
     logging.debug(f"Received data: {data}")
     required_features = [
         'user_id_encoded', 'cycle_start_month', 'period_duration',
-        'days_until_ovulation',
-        'flow_Heavy', 'flow_Light', 'flow_Medium', 'symptom_acne',
-        'symptom_mood swings',
+        'days_until_ovulation', 'flow_heavy', 'flow_light', 'flow_medium',
+        'symptom_acne', 'symptom_mood_swings',
         'symptom_fatigue', 'symptom_cramps', 'symptom_headache',
-        'symptom_breast tenderness',
+        'symptom_breast_tenderness',
         'symptom_bloating', 'symptom_insomnia', 'mean_cycle_length',
-        'std_cycle_length',
-        'avg_period_duration'
+        'std_cycle_length', 'avg_period_duration'
     ]
     if not all(feature in data for feature in required_features):
         error_message = "Missing required features in request. Required features are: " + ", ".join(required_features)
@@ -277,15 +275,15 @@ def predict_cycle():
             'cycle_start_month': int(data.get('cycle_start_month')),
             'period_duration': float(data.get('period_duration')),
             'days_until_ovulation': float(data.get('days_until_ovulation')),
-            'flow_Heavy': float(data.get('flow_Heavy')),
-            'flow_Light': float(data.get('flow_Light')),
-            'flow_Medium': float(data.get('flow_Medium')),
+            'flow_heavy': float(data.get('flow_heavy')),
+            'flow_light': float(data.get('flow_light')),
+            'flow_medium': float(data.get('flow_medium')),
             'symptom_acne': float(data.get('symptom_acne')),
-            'symptom_mood swings': float(data.get('symptom_mood_swings')),
+            'symptom_mood_swings': float(data.get('symptom_mood_swings')),
             'symptom_fatigue': float(data.get('symptom_fatigue')),
             'symptom_cramps': float(data.get('symptom_cramps')),
             'symptom_headache': float(data.get('symptom_headache')),
-            'symptom_breast tenderness': float(data.get('symptom_breast_tenderness')),
+            'symptom_breast_tenderness': float(data.get('symptom_breast_tenderness')),
             'symptom_bloating': float(data.get('symptom_bloating')),
             'symptom_insomnia': float(data.get('symptom_insomnia')),
             'mean_cycle_length': float(data.get('mean_cycle_length')),

@@ -39,8 +39,8 @@ def predict_cycle_length(model, data):
         # the model was trained on.
         expected_columns = [
             'user_id_encoded', 'cycle_start_month', 'period_duration',
-            'days_until_ovulation', 'flow_Heavy', 'flow_Light',
-            'flow_Medium', 'symptom_acne', 'symptom_mood swings',
+            'days_until_ovulation', 'flow_heavy', 'flow_light',
+            'flow_medium', 'symptom_acne', 'symptom_mood swings',
             'symptom_fatigue', 'symptom_cramps', 'symptom_headache',
             'symptom_breast tenderness', 'symptom_bloating',
             'symptom_insomnia', 'mean_cycle_length',

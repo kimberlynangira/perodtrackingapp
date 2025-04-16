@@ -359,7 +359,7 @@
                         <div class="form-group">
                             <label for="flow_Heavy">Flow Heavy:</label>
                             <div class="input-controls">
-                                <input type="number" id="flow_heavy" name="flow_Heavy" required min="0" max="5" value="0">
+                                <input type="number" id="flow_heavy" name="flow_heavy" required min="0" max="5" value="0">
                                 <div class="arrows">
                                     <button type="button" class="arrow up" onclick="adjustInput('flow_heavy', 1)">▲</button>
                                     <button type="button" class="arrow down" onclick="adjustInput('flow_heavy', -1)">▼</button>
@@ -370,7 +370,7 @@
                         <div class="form-group">
                             <label for="flow_Light">Flow Light:</label>
                             <div class="input-controls">
-                                <input type="number" id="flow_light" name="flow_Light" required min="0" max="5" value="0">
+                                <input type="number" id="flow_light" name="flow_light" required min="0" max="5" value="0">
                                 <div class="arrows">
                                     <button type="button" class="arrow up" onclick="adjustInput('flow_light', 1)">▲</button>
                                     <button type="button" class="arrow down" onclick="adjustInput('flow_light', -1)">▼</button>
@@ -381,7 +381,7 @@
                         <div class="form-group">
                             <label for="flow_Medium">Flow Medium:</label>
                             <div class="input-controls">
-                                <input type="number" id="flow_medium" name="flow_Medium" required min="0" max="5" value="0">
+                                <input type="number" id="flow_medium" name="flow_medium" required min="0" max="5" value="0">
                                 <div class="arrows">
                                     <button type="button" class="arrow up" onclick="adjustInput('flow_medium', 1)">▲</button>
                                     <button type="button" class="arrow down" onclick="adjustInput('flow_medium', -1)">▼</button>
@@ -403,7 +403,7 @@
                         <div class="form-group">
                             <label for="symptom_mood_swings">Symptom Mood Swings:</label>
                             <div class="input-controls">
-                                <input type="number" id="symptom_mood_swings" name="symptom_mood swings" required min="0" max="5" value="0">
+                                <input type="number" id="symptom_mood_swings" name="symptom_mood_swings" required min="0" max="5" value="0">
                                 <div class="arrows">
                                     <button type="button" class="arrow up" onclick="adjustInput('symptom_mood_swings', 1)">▲</button>
                                     <button type="button" class="arrow down" onclick="adjustInput('symptom_mood_swings', -1)">▼</button>
@@ -447,7 +447,7 @@
                         <div class="form-group">
                             <label for="symptom_breast_tenderness">Symptom Breast Tenderness:</label>
                             <div class="input-controls">
-                                <input type="number" id="symptom_breast_tenderness" name="symptom_breast tenderness" required min="0" max="5" value="0">
+                                <input type="number" id="symptom_breast_tenderness" name="symptom_breast_tenderness" required min="0" max="5" value="0">
                                 <div class="arrows">
                                     <button type="button" class="arrow up" onclick="adjustInput('symptom_breast_tenderness', 1)">▲</button>
                                     <button type="button" class="arrow down" onclick="adjustInput('symptom_breast_tenderness', -1)">▼</button>
@@ -539,8 +539,9 @@
                 let hasErrors = false;
                 for (const key in data) {
                     const errorDivId = `${key}-error`;
+                    console.log(errorDivId);
                     const errorDiv = document.getElementById(errorDivId);
-                    if (data[key] < 0 || data[key] > 5) {
+                    if (data[key] < 0 || data[key] > 100) {
                         hasErrors = true;
                         errorDiv.textContent = "Value must be between 0 and 5.";
                         document.getElementById(key).classList.add('error');
@@ -554,7 +555,7 @@
                     return; // Stop submission if there are errors
                 }
                 // Send data to the server for prediction
-                fetch('/predict_cycle_length', {  //  Ensure this matches your Flask route
+                fetch('/predict_cycle', {  //  Ensure this matches your Flask route
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -567,7 +568,7 @@
                     if (result.error) {
                         predictionResultDiv.textContent = `Error: ${result.error}`;
                     } else {
-                        predictionResultDiv.textContent = `Predicted Cycle Length: ${result.prediction.toFixed(2)} days`;
+                        predictionResultDiv.textContent = `Predicted Cycle Length: ${result.predicted_cycle_length.toFixed(2)} days`;
                     }
                 })
                 .catch(error => {
